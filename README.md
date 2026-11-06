@@ -33,7 +33,7 @@ contain a keyword.
 
 ```bash
 # No install. One file, Python 3.8+ stdlib only.
-curl -fsSL https://gcore.jsdelivr.net/gh/tomlen/sudolens@main/sudolens.py -o sudolens.py
+curl -fsSL https://gcore.jsdelivr.net/gh/tomlen045/sudolens@main/sudolens.py -o sudolens.py
 
 # 30-second demo on built-in synthetic data (24 rules, only 3 are dangerous)
 python3 sudolens.py --demo
