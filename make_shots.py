@@ -104,18 +104,20 @@ shot("sl-shot-3-explain", [
     ("# 拿去给非技术同事看，一眼能懂谁身上有雷", GREY, 21, False),
 ])
 
-# 4. 本机立案实拍（脱敏：只出统计 + sudoers.d 一条线索定性）
+# 4. 本机立案实拍（真实 run：sudo cat 收集的 sudoers 拷贝，用户名已脱敏）
 shot("sl-shot-4-case", [
-    ("$ sudo python3 sudolens.py scan", WHITE, 24, True),
-    ("解析 2 个文件（sudoers, sudoers.d/service-bak）· 14 条规则", GREEN, 23, False),
-    ("CRIT x2   WARN x1   INFO x11   （本机默认脱敏：只出统计）", WHITE, 23, True),
+    ("$ sudo cat /etc/sudoers > sudoers.copy   # root 只读收集", WHITE, 23, True),
+    ("$ python3 sudolens.py scan --path sudoers.copy --full", WHITE, 23, True),
+    ("解析 2 个文件（sudoers.copy, sudoers.d/deploy-bak）", GREEN, 23, False),
+    ("14 条规则 · 12 条提权路径", WHITE, 23, False),
+    ("CRIT x6   WARN x2   INFO x4", GOLD, 24, True),
     ("------------------------------------------------------------------------", GREY, 19, True),
-    ("[CRIT] svc_bak @ ALL → (root) NOPASSWD: 任意命令 [SL-01]", RED, 22, False),
-    ("  ↑ sudoers.d 里一份被遗忘的服务调试授权", GOLD, 21, False),
+    ("[CRIT] deploy2 @ ALL → (root) NOPASSWD: 任意命令 [SL-01]", RED, 22, False),
+    ("  ↑ sudoers.d 里一份被遗忘的调试授权，没人说得清谁加的", GOLD, 21, False),
     ("[CRIT] deploy @ ALL → NOPASSWD: /usr/bin/docker [SL-02]", RED, 22, False),
     ("  ↑ docker 免密 = 挂载宿主根文件系统 = root", GOLD, 21, False),
-    ("立案 → 分级 → explain：sudolens 自己抓出了自己的机器问题", WHITE, 22, False),
-    ("# 截图已脱敏，规则内容不出镜，只讲定性结论", GREY, 21, False),
+    ("立案 → 分级 → explain：拷贝已脱敏，结构未动", WHITE, 22, False),
+    ("# 你机器上的 sudoers.d 里，也躺着几条这样的历史遗留", GREY, 21, False),
 ])
 
 # 5. selftest 全绿（真实输出）
