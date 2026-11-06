@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.DS_Store
+*-article.html
+.gitignore
+
+# cover generator + local draft artifacts (never public)
+make_cover*.py
+*cover*.png
